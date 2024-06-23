@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "modulaweaver",
+  "version": "${version}",
+  "name": "ModulaWeaver",
+  "description": "ModulaWeaver allows you to modify the games source from within the game itself",
+  "authors": [
+    "IDoTheHax"
+  ],
+  "contact": {
+    "repo": "https://github.com/IDoTheHax/ModulaWeaver"
+  },
+  "license": "Apache-2.0",
+  "icon": "assets/modulaweaver/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.idothehax.modulaweaver.client.ModulaWeaverClient"
+    ],
+    "main": [
+      "net.idothehax.modulaweaver.ModulaWeaver"
+    ]
+  },
+  "mixins": [
+    "modulaweaver.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
