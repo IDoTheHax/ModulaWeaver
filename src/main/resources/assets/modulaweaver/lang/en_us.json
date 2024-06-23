@@ -1,3 +1,6 @@
 {
-  "commands.modulaweaver.command.executed": "ModulaWeaver Command Ran Successfully"
+  "config.title": "ModulaWeaver Config",
+  "commands.modulaweaver.command.executed": "ModulaWeaver Command Ran Successfully",
+  "commands.modulaweaver.command.loadfile.success": "File Loaded Succesfully",
+  "commands.modulaweaver.command.loadfile.failed": "Hmm Something went wrong!"
 }
