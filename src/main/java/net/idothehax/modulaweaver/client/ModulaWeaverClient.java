@@ -1,4 +1,10 @@
 package net.idothehax.modulaweaver.client;
 
-public class ModulaWeaverClient {
+import net.fabricmc.api.ClientModInitializer;
+
+public class ModulaWeaverClient implements ClientModInitializer {
+    @Override
+    public void onInitializeClient() {
+
+    }
 }
