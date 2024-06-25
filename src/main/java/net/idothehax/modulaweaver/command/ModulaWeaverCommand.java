@@ -28,9 +28,13 @@ public class ModulaWeaverCommand {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             dispatcher.register(CommandManager.literal("modulaweaver")
-                    .then(CommandManager.literal("new")
-                            .executes(ModulaWeaverCommand::openTextEditor)));
+                .then(CommandManager.literal("editor")
+                        .executes(ModulaWeaverCommand::openTextEditor)
+                        .then(CommandManager.argument("filename", StringArgumentType.greedyString())
+                                .executes(ModulaWeaverCommand::openTextEditorWithFile))));
         });
+
+        
     }
 
     private static int executeTestClassCommand(CommandContext<ServerCommandSource> context) {
@@ -68,8 +72,40 @@ public class ModulaWeaverCommand {
     }
 
     private static int openTextEditor(CommandContext<ServerCommandSource> context) {
+        return openEditor(context, "untitled.txt", "");
+    }
+
+    private static int openTextEditorWithFile(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        String filename = StringArgumentType.getString(context, "filename");
+        Path filePath = Paths.get(MinecraftClient.getInstance().runDirectory.getAbsolutePath(), "modulaweaver", filename);
+        
+        String content;
+        try {
+            content = Files.readString(filePath);
+        } catch (IOException e) {
+            LOGGER.error("Failed to read file: " + filename, e);
+            context.getSource().sendError(Text.translatable("command.modulaweaver.editor.error.file_read", filename));
+            return 0;
+        }
+
+        return openEditor(context, filename, content);
+    }
+
+    private static int openEditor(CommandContext<ServerCommandSource> context, String filename, String content) {
         MinecraftClient client = MinecraftClient.getInstance();
-        client.execute(() -> client.setScreen(new CustomGuiScreen()));
-        return 1;
+        try {
+            client.execute(() -> {
+                if (codeEditor == null) {
+                    codeEditor = new MinecraftCodeEditor(Text.translatable("commands.modulaweaver.editor.save").getString());
+                }
+                codeEditor.show(filename, content);
+            });
+            context.getSource().sendFeedback(() -> Text.translatable("commands.modulaweaver.editor.opened", filename), false);
+            return Command.SINGLE_SUCCESS;
+        } catch (Exception e) {
+            LOGGER.error("Failed to open text editor: ", e);
+            context.getSource().sendError(Text.translatable("commands.modulaweaver.editor.error.open"));
+            return 0;
+        }
     }
 }

@@ -2,5 +2,9 @@
   "config.title": "ModulaWeaver Config",
   "commands.modulaweaver.command.executed": "ModulaWeaver Command Ran Successfully",
   "commands.modulaweaver.command.loadfile.success": "File Loaded Succesfully",
-  "commands.modulaweaver.command.loadfile.failed": "Hmm Something went wrong!"
+  "commands.modulaweaver.command.loadfile.failed": "Hmm Something went wrong!",
+  "command.modulaweaver.editor.error.file_read": "Failed to open file: %s",
+  "command.modulaweaver.editor.save": "Save",
+  "command.modulaweaver.editor.opened": "Opened editor for: %s",
+  "command.modulaweaver.editor.error.open": "Failed to open text editor. Check logs for details."
 }
